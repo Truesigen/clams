@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class BurnedTokensController extends Controller
+{
+    public function store(Request $request)
+    {
+        $validate = Validator($request->input(), [
+            'signature' => 'required|string',
+            'account' => 'required|string',
+            'name' => 'required|string',
+            'amount' => 'required|string',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json(['message' => $validate->errors()->all()], 422);
+        }
+
+        $burnedToken = $request->user()->burnedTokens()->create($request->only(['signature', 'account', 'name', 'amount']));
+
+        return response()->json(['message' => 'successfull'], 200);
+    }
+}
