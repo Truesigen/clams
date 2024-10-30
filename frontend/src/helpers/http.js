@@ -3,6 +3,8 @@ import axios from "axios";
 const http = () => {
     let options = {
         headers: {},
+        baseURL: 'https://clams.pro',
+        withCredentials: false,
     }
 
     if (localStorage.getItem('token')) {

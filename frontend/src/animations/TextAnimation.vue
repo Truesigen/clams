@@ -7,39 +7,35 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const props = defineProps({
-    originalText: {
-        type: String,
-        required: true
-    }
-});
-
 const animatedText = ref("");
-const emit = defineEmits();
+const emit = defineEmits(['animation-complete']);
 
 onMounted(() => {
     animateText();
 });
 
 function animateText() {
+
+    const originalText = "meme incinerator";
+
     let index = 0;
+
     const intervalId = setInterval(() => {
-        animatedText.value += props.originalText[index];
+        animatedText.value += originalText.charAt(index);
         index++;
-        if (index === props.originalText.length) {
+        if (index === originalText.length) {
             clearInterval(intervalId);
-            // После окончания анимации текста, отправить событие в родительский компонент
+
             emit('animation-complete');
         }
-    }, 50); // Adjust the interval duration for your desired animation speed
+    }, 100);
 }
 </script>
-
 <style>
 .animated-text {
     opacity: 0;
     animation: fadeInText 2s forwards;
-    /* Adjust the animation duration as needed */
+
 }
 
 @keyframes fadeInText {

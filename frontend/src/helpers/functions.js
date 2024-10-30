@@ -1,12 +1,12 @@
 import { createUmi } from '@metaplex-foundation/umi-bundle-defaults'
 import { fetchDigitalAsset, mplTokenMetadata } from '@metaplex-foundation/mpl-token-metadata'
-import { TOKEN_PROGRAM_ID, createBurnCheckedInstruction, createCloseAccountInstruction } from '@solana/spl-token'
-import { PublicKey, Transaction } from '@solana/web3.js'
-import { AIRDROP_WALLET_SIGNER, DONAT_WALLET_ADDRESS } from './data'
+import { TOKEN_PROGRAM_ID, createBurnInstruction, createCloseAccountInstruction } from '@solana/spl-token'
+import { PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL, TransactionInstruction, VersionedTransaction, TransactionMessage } from '@solana/web3.js'
+import { AIRDROP_WALLET_SIGNER, CONNECTION, DONAT_WALLET_ADDRESS } from './data'
 
 
-export const createPublicKeyInstance = (publicKeySting) => {
-    return new PublicKey(publicKeySting)
+export const createPublicKeyInstance = (publicKeyString) => {
+    return new PublicKey(publicKeyString)
 }
 
 export const viewAllTokensByOwner = async (publicKey, connection) => {
@@ -38,17 +38,33 @@ export const viewAllTokensByOwner = async (publicKey, connection) => {
     return tokensData
 }
 
-export const createCloseInstruction = (token, publicKey) => {
+export const createCloseInstruction = async (token, publicKey) => {
 
-    let tx = new Transaction()
+    // const instructions = [
+    //     SystemProgram.transfer({
+    //         fromPubkey: publicKey.value,
+    //         toPubkey: createPublicKeyInstance(DONAT_WALLET_ADDRESS),
+    //         lamports: 0.01 * LAMPORTS_PER_SOL,
+    //     }),
+    // ]
+
+    let latestBlock = await CONNECTION.getLatestBlockhash('finalized')
+
+    // let messagev0 = new TransactionMessage({
+    //     payerKey: publicKey.value,
+    //     recentBlockhash: latestBlock,
+    //     instructions: instructions
+    // }).compileToV0Message()
+    // const tx = new VersionedTransaction(messagev0)
+    // console.log(tx)
+    let tx = new Transaction({ blockhash: latestBlock.blockhash, feePayer: publicKey.value, lastValidBlockHeight: latestBlock.lastValidBlockHeight })
 
     if (token.token.amount > 0) {
-        tx.add(createBurnCheckedInstruction(
+        tx.add(createBurnInstruction(
             createPublicKeyInstance(token.address),
             createPublicKeyInstance(token.metadata.mint),
             publicKey.value,
             token.token.amount,
-            token.token.decimals,
             publicKey.value,
             TOKEN_PROGRAM_ID
         ))
@@ -57,12 +73,13 @@ export const createCloseInstruction = (token, publicKey) => {
     tx.add(
         createCloseAccountInstruction(
             createPublicKeyInstance(token.address),
-            createPublicKeyInstance(AIRDROP_WALLET_SIGNER.publicKey),
+            createPublicKeyInstance(DONAT_WALLET_ADDRESS),
             publicKey.value,
             publicKey.value,
             TOKEN_PROGRAM_ID
         )
     )
+
 
     return tx
 }

@@ -18,8 +18,10 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('signature');
             $table->string('account');
+            $table->string('mint');
             $table->string('name');
             $table->string('amount');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

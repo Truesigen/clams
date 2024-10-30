@@ -19,8 +19,10 @@ Route::controller(App\Http\Controllers\Api\LoginController::class)->middleware('
     Route::get('/status', function () {
         return response()->json(['message' => 'healthy'], 200);
     });
+    Route::get('/overall', [App\Http\Controllers\Api\ProgressController::class, 'showOverall']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/burned/store', [App\Http\Controllers\Api\BurnedTokensController::class, 'store']);
+    Route::get('/score', [App\Http\Controllers\Api\ProgressController::class, 'showScore']);
 });

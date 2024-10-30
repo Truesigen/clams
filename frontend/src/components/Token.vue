@@ -1,62 +1,72 @@
 <template>
-
     <div class="relative" :style="position">
-
         <div class="size-16 2xl:size-20" ref="domEl" @mouseenter="handlePauseAnimation"
             @mouseleave="handlePlayAnimation" @click.stop="showDetails = !showDetails">
-            <img class="rounded-full hover:shadow-lg cursor-pointer hover:scale-105 " :src="icon" loading="lazy"
-                alt="Token Icon" />
+            <img crossorigin="anonymous" class="rounded-full hover:shadow-lg cursor-pointer hover:scale-105" :src="icon"
+                loading="lazy" @error="handleIcon" />
         </div>
-        <div v-if="showDetails" class="absolute bottom-5 z-50 bg-white border border-gray-300 p-4 shadow-lg rounded-lg">
+        <Sidebar @show="handlePrice()" v-model:visible="showDetails" :showCloseIcon="false" position="right"
+            class="bg-contain bg-no-repeat bg-bottom" :style="{ backgroundImage: `url(${fire})` }">
+            <div class="flex flex-col backdrop-blur-sm justify-start size-full space-y-2 text-white">
+                <div class="inline-flex justify-end">
+                    <button
+                        class="flex items-center justify-center w-5 h-5 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none"
+                        @click.prevent="showDetails = false">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="size-1/4">
+                    <img crossorigin="anonymous" class="rounded-full" :src="icon" loading="lazy" @error="handleIcon" />
+                </div>
+                <div>
+                    <span class="text-sm text-gray-400">address</span>
+                    <div class="font-bold text-sm">{{ token.address }}</div>
+                </div>
+                <div>
+                    <span class="text-sm text-gray-400">name</span>
+                    <div class="font-semibold text-lg">{{ token.metadata.name }}</div>
+                </div>
+                <div>
+                    <span class="text-sm text-gray-400">amount</span>
+                    <div class="font-semibold text-lg">{{ token.token.uiAmount }}</div>
+                </div>
+                <div>
+                    <span class="text-sm text-gray-400">price</span>
+                    <div class="font-semibold text-lg">{{ '$' + price }}</div>
+                </div>
+                <div class="flex justify-end">
+                    <Button @click.prevent="emit('destroyToken')" :loading="props.loading" size="large"
+                        class="bg-transparent w-full">BURN</Button>
+                </div>
+            </div>
+        </Sidebar>
 
-            <div class="flex justify-end">
-                <button
-                    class="flex items-center justify-center w-6 h-6 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none"
-                    @click.prevent="showDetails = !showDetails">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <div class="size-12 2xl:size-16">
-                <img class="rounded-full hover:shadow-lg cursor-pointer hover:scale-105 " :src="icon" loading="lazy"
-                    alt="Token Icon" />
-            </div>
-            <div>
-                <span class="text-xs text-gray-500">address</span>
-                <div class="font-semibold text-sm">{{ token.address }}</div>
-            </div>
-            <div>
-                <span class="text-xs text-gray-500">name</span>
-                <div class="font-semibold text-base">{{ token.metadata.name }}</div>
-            </div>
-            <div>
-                <span class="text-xs text-gray-500">amount</span>
-                <div class="font-semibold text-base">{{ token.token.uiAmount }}</div>
-            </div>
-            <div class="flex justify-end">
-                <button @click.prevent="emit('destroyToken')"
-                    class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                    <span>burn</span>
-                </button>
-            </div>
-        </div>
     </div>
+
 </template>
 <script setup>
 import { onMounted, ref } from 'vue'
+import Sidebar from 'primevue/sidebar';
+import Button from 'primevue/button';
 import axios from 'axios';
+import fire from '@/assets/underwater/fire.gif'
+import default_icon from '@/assets/default_icon.png'
+
 
 const props = defineProps({
     token: { type: Object },
+    loading: { type: Boolean }
 })
 const emit = defineEmits(['destroyToken'])
 
 const icon = ref('')
 const position = ref({})
 const domEl = ref()
+const price = ref(undefined)
 const showDetails = ref(false)
 
 onMounted(() => {
@@ -64,12 +74,6 @@ onMounted(() => {
     setIcon()
     setAnimation()
 })
-
-function setStyle() {
-    let posX = Math.floor(Math.random() * 82)
-    position.value = { transform: `translate(${posX}%, 0%)` }
-}
-
 
 function handlePauseAnimation() {
     let pause = domEl.value.getAnimations()
@@ -80,6 +84,26 @@ function handlePlayAnimation() {
     let play = domEl.value.getAnimations()
     play[0].play()
 }
+
+function handleIcon() {
+    icon.value = default_icon
+}
+
+function handlePrice() {
+    if (price.value == undefined) {
+        axios.get('https://api.dexscreener.com/latest/dex/tokens/' + props.token.mint).then(success => {
+            price.value = success.data.pairs ? success.data.pairs[0].priceUsd : '0'
+
+        })
+    }
+}
+
+function setStyle() {
+    let posX = Math.floor(Math.random() * 93)
+    position.value = { transform: `translate(${posX}%, 0%)` }
+}
+
+
 
 function setAnimation() {
 
@@ -116,6 +140,5 @@ function setIcon() {
 
 
 
-
 </script>
-<style></style>
+<style scoped></style>

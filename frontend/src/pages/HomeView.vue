@@ -1,111 +1,174 @@
 <template>
-    <div class="2xl:w-4/5 mx-auto pt-44">
-        <div class="font-mono text-start text-2xl">
-            <h1>$CLAMS on Solana</h1>
-            <TextAnimation :originalText="originalText" @animation-complete="showOtherContent = true" />
+    <div class="static indie-flower-regular">
+        <div class="min-h-screen flex flex-col justify-center bg-slate-800">
+            <img src="@/assets/home/bg-clam.jpg" class="absolute blur-md h-screen w-full object-fill"
+                fetchpriority="high">
+            <div class="flex text-center items-center justify-center pt-16 z-10 permanent-marker-regular">
+                <h1 class="text-9xl text-lime-400 font-black">The Clam</h1>
+            </div>
+            <div class="text-5xl md:text-7xl font-semibold text-center text-rose-500 animate-pulse pt-32 ">
+                <text-animation></text-animation>
+            </div>
+            <div class="flex flex-row justify-center items-center translate-y-7 ">
+                <a href="https://twitter.com/solanas_clams" class="cursor-pointer hover:scale-105"><img
+                        src="@/assets/home/twitter.png"></a>
+                <a href="https://t.me/solanas_clams" class="cursor-pointer hover:scale-105"><img
+                        class="bg-white rounded-lg size-1/2" src="@/assets/home/telegram.png"></a>
+            </div>
+            <img src="@/assets/home/border.png" class="absolute bottom-0 w-full h-10 object-cover">
         </div>
-    </div>
-
-    <section v-if="showOtherContent"
-        class=" 2xl:w-4/5 mx-auto space-y-7 py-36 font-medium text-2xl indie-flower-regular animate-fade-in select-none">
-        <div class="flex justify-between text-center my-5 w-full">
-            <img :src="planet" alt="Margarita the Snail"
-                class="levitating-box rounded-full shadow-2xl float-left w-2/6 md:w-1/4">
-
-            <p class="w-1/2 md:w-3/4">
-
-                In any habitat, whether it's nature with living organisms or a blockchain with tokens, there should be a
-                kind of "cleaners" who ensure proper functioning and sanitation. Failure to provide these aspects can
-                lead to deterioration of the entire system (or not). Especially when meme season began, this question is
-                more relevant than ever.
-
-            </p>
+        <div class="relative min-h-screen bg-slate-950 flex items-center justify-center">
+            <img src="@/assets/home/bg-meme.png" class="absolute h-screen w-full object-fill">
+            <div class="z-50 text-5xl lg:text-9xl text-center text-white permanent-marker-regular"
+                v-animateonscroll="{ enterClass: 'fadeIn', leaveClass: 'fadeOut' }">
+                <h1>classic?</h1>
+            </div>
+            <img src="@/assets/home/border.png" class="absolute bottom-0 w-full h-10 object-cover">
         </div>
-        <div class="flex justify-between text-center my-5 w-full">
-            <p class="w-1/2 md:w-3/4">
-                Currently, on the Solana blockchain, there are approximately <a
-                    href="https://www.dextools.io/app/en/solana/gainers" class="underline">~270,000
-                    tokens</a>, which is about ~10% of the
-                total number of tokens across all blockchains. According to Solana's documentation, each entity on the
-                blockchain has a unique account linked to the token owner's address.
-            </p>
-            <div class="cube-container float-right ">
-
-                <div class="cube">
-
-                    <div class="face front"></div>
-                    <div class="face back"></div>
-                    <div class="face right"></div>
-                    <div class="face left"></div>
-                    <div class="face top"></div>
-                    <div class="face bottom"></div>
+        <div class="relative min-h-screen bg-slate-950 flex items-center justify-center text-center">
+            <img src="@/assets/home/callboard.jpg" class="absolute blur-sm h-screen w-full object-fill">
+            <div :style="{ backgroundImage: `url(${fire})` }"
+                class="text-7xl text-black font-black absolute top-28 bg-center">
+                Solana needs a new hero!
+            </div>
+            <div class="z-50 pt-12 text-5xl flex flex-col items-center text-amber-500 permanent-marker-regular"
+                v-animateonscroll="{ enterClass: 'fadeIn', leaveClass: 'fadeOut' }">
+                <img src="@/assets/home/clam-man.png" class="levitate">
+                <p class="bg-black rounded-full p-4 ">save the Solana, burn them all!</p>
+            </div>
+            <img src="@/assets/home/border.png" class="absolute bottom-0 w-full h-10 object-cover">
+        </div>
+        <div class="relative min-h-screen bg-slate-950 flex items-center justify-center">
+            <img src="@/assets/home/bg-burn.gif" class="absolute -bottom-2 h-screen w-full object-fill">
+            <div v-animateonscroll="{ enterClass: 'fadeIn', leaveClass: 'fadeOut' }">
+                <img src="@/assets/home/cloud.png" class="absolute lg:left-12 left-0 top-0 lg:w-1/5 w-1/3">
+            </div>
+            <div v-animateonscroll="{ enterClass: 'fadeIn', leaveClass: 'fadeOut' }">
+                <img src="@/assets/home/person.png" class="absolute bottom-32 lg:w-1/4 w-1/2 hue-rotate-30">
+            </div>
+            <img src="@/assets/home/border.png" class="absolute bottom-0 w-full h-12 object-cover">
+        </div>
+        <div class="relative min-h-screen bg-slate-950 flex items-center justify-center text-white">
+            <img src="@/assets/home/bg-map.jpg" class="absolute blur-md h-screen w-full object-fill">
+            <div class="absolute md:top-1/4 top-0 grid grid-cols-2 gap-14 content-center md:text-5xl text-2xl ">
+                <div>
+                    <h2 class="text-center font-semibold mb-12">Clams population</h2>
+                    <div class="flex flex-col text-black text-center space-y-6">
+                        <div class="p-2 bg-white rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold mb-2">Total Supply</h3>
+                            <p class="text-2xl">1 billion CLAMS</p>
+                        </div>
+                        <div class="p-2 bg-white rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold mb-2">Initial Distribution</h3>
+                            <p class="text-2xl">90% rewards | 10% dex/cex liquidity</p>
+                        </div>
+                        <div class="p-2 bg-white rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold mb-2">Token address</h3>
+                            <p class="text-2xl">TBD</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <h2 class="pb-12 text-5xl font-semibold">Some Road</h2>
+                    <div class="space-y-2 border-l-2 border-dashed">
+                        <div class="relative w-full">
+                            <div class="ml-6">
+                                <h4 class="font-bold">10,000 burns</h4>
+                                <p class="mt-2 max-w-screen-sm text-lg">Users make 10,000 burns - first liquidity for
+                                    project.</p>
+                            </div>
+                        </div>
+                        <div class="relative w-full">
+                            <div class="ml-6">
+                                <h4 class="font-bold">launch</h4>
+                                <p class="mt-2 max-w-screen-sm text-lg">Mint main token, claimable airdrop to all users
+                                    who burn
+                                    at
+                                    least one entity.</p>
+                            </div>
+                        </div>
+                        <div class="relative w-full">
+                            <div class="ml-6">
+                                <h4 class="font-bold">Marketing and community space</h4>
+                                <p class="mt-2 max-w-screen-sm text-lg">Do everything possible to increase the project's
+                                    visibility and grow the community.</p>
+                            </div>
+                        </div>
+                        <div class="relative w-full">
+                            <div class="ml-6">
+                                <h4 class="font-bold">100,000 burns</h4>
+                                <p class="mt-2 max-w-screen-sm text-lg">second point of burns, grab liquidity for next
+                                    move.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="relative w-full">
+                            <div class="ml-6">
+                                <h4 class="font-bold">TBD</h4>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <img src="@/assets/home/border.png" class="absolute bottom-0 w-full h-12 object-cover">
         </div>
-        <div class="flex text-center my-5 w-full">
-            <img :src="snail_1" alt="Cerithiidae" class="float-right w-1/2 md:w-1/4 mx-auto">
-            <p class="w-1/2 md:w-3/4">
-                The creators of Solana have implemented the ability within the blockchain to burn tokens and, if
-                necessary, close accounts associated with those tokens. This can occur automatically through the garbage
-                collector, a process designed to help reduce network-wide storage of unused or deprecated data, or it
-                can be initiated by running a specific program when needed.
-            </p>
+        <div
+            class="relative min-h-screen bg-slate-950 flex items-center justify-center text-center permanent-marker-regular">
+            <img src="@/assets/home/bg-end.jpg" class="absolute blur-md h-screen w-full object-fill">
+            <div class="text-5xl p-5 rounded-lg bg-black text-lime-300 font-black absolute top-32 bg-center">
+                How to earn?
+            </div>
+            <div v-animateonscroll="{ enterClass: 'fadeIn', leaveClass: 'fadeOut' }"
+                class="md:text-5xl text-3xl p-5 rounded-md text-black font-black z-10">
+                <ul>
+                    <li>1. Go to the clam station page.</li>
+                    <li>2. connect your Phantom wallet.</li>
+                    <li>3. burn zero-value tokens.</li>
+                    <li>4. wait for the announcement, and claim airdrop.</li>
+                </ul>
+            </div>
         </div>
-        <div class="flex justify-center text-center w-full">
-            <p class="w-1/2 md:w-3/4">
-                Let's not delve into details or give lectures on how the Solana blockchain works, all comprehensive
-                information is available in the <a href="https://solana.com/docs" class="underline">documentation</a>.
-                Let's get straight to the point.
-            </p>
-        </div>
-        <div class="flex-row justify-center items-center text-center w-full">
-            <img :src="scallop" alt="Cerithiidae" class="w-1/2 md:w-1/4 mx-auto">
-            <p>
-                Our idea is to launch a campaign for cleaning and burning entities that have no value. You
-                engage in activities, burn tokens, close accounts, and thereby purchase landing spots in the $CLAMS
-                airdrop.
-            </p>
-            <p>No public or private sales, no investors, all based solely on the organic activity
-                of your participation.</p>
-            <p>All actions will be accompanied by fictional stories and narratives to maintain the ambiance. If you're
-                ready, let's move on to the <strong class="underline cursor-pointer"
-                    @click="$router.push('/mission')">first mission!</strong></p>
-        </div>
-
-    </section>
-    <div v-show="showOtherContent" class="w-full mx-auto px-4 py-8 bg-white shadow-lg rounded-lg">
-        <p class="text-gray-800  leading-relaxed">
-            <span class="font-semibold">Disclaimer:</span>
-            The information provided on this website is for entertainment purposes only. It is not
-            intended as legal, financial, or professional advice. Any actions taken based on this information are at
-            your
-            own risk. We make no representations or warranties of any kind regarding the completeness, accuracy,
-            reliability, suitability, or availability of the content. We will not be liable for any losses,
-            injuries, or
-            damages from the use or reliance on this information. Always seek the advice of qualified professionals
-            regarding specific issues or concerns.
-        </p>
     </div>
 
 </template>
 <script setup>
 import TextAnimation from '@/animations/TextAnimation.vue'
-import snail_1 from '@/assets/OIP.png'
-import planet from '@/assets/planet.png'
-import scallop from '@/assets/scallop.png'
+import fire from '@/assets/home/fire.gif'
 
 
 
-
-import { ref } from 'vue'
-
-const originalText = "Join our campaign to clean up the crypto-ocean and defeat the pollutants! Let's make waves and protect our solana environment together!";
-const showOtherContent = ref(false)
 </script>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Shadows+Into+Light&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Yarndings+12+Charted&display=swap');
 
-@keyframes fade-in {
+.permanent-marker-regular {
+    font-family: "Permanent Marker", cursive;
+}
+
+
+.indie-flower-regular {
+    font-family: "Indie Flower";
+}
+
+
+@keyframes levitate {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.levitate {
+    animation: levitate 3s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
     from {
         opacity: 0;
     }
@@ -115,105 +178,11 @@ const showOtherContent = ref(false)
     }
 }
 
-.animate-fade-in {
-    animation: fade-in 2s ease-out;
+.fadeIn {
+    animation: fadeIn 2s ease-in-out;
 }
 
-.indie-flower-regular {
-    font-family: "Indie Flower", cursive;
-}
-
-
-.levitating-box {
-
-    animation: levitate 2s ease-in-out infinite alternate;
-    /* Анимация "levitate" */
-}
-
-/* Ключевая анимация "levitate" */
-@keyframes levitate {
-    0% {
-        transform: translateY(0);
-        /* Начальное положение (нет смещения) */
-    }
-
-    100% {
-        transform: translateY(-10px);
-        /* Конечное положение (смещение вверх на 10px) */
-    }
-}
-
-
-.cube-container {
-    width: 200px;
-    height: 300px;
-    perspective: 800px;
-    /* Устанавливаем перспективу */
-}
-
-.cube {
-    width: 100%;
-    height: 100%;
-
-
-    position: relative;
-    transform-style: preserve-3d;
-    /* Задаем стиль 3D трансформации */
-    animation: rotateCube 25s linear infinite;
-    /* Анимация вращения */
-}
-
-.face {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background-color: rgb(0, 0, 0);
-    /* Цвет граней куба */
-    border: 1px solid rgba(42, 10, 129, 0.9);
-    /* Обводка граней куба */
-    display: flex;
-    justify-content: center;
-    background-image: url('/src/assets/solana_logo.png');
-    background-size: cover;
-    align-items: center;
-    font-size: 24px;
-    color: white;
-    font-weight: bold;
-}
-
-/* Анимация вращения куба */
-@keyframes rotateCube {
-    0% {
-        transform: rotateX(0deg) rotateY(0deg);
-    }
-
-    100% {
-        transform: rotateX(360deg) rotateY(360deg);
-    }
-}
-
-/* Расставляем грани куба */
-.front {
-    transform: translateZ(100px);
-}
-
-.back {
-    transform: rotateY(180deg) translateZ(100px);
-}
-
-.right {
-    transform: rotateY(90deg) translateZ(100px);
-}
-
-.left {
-    transform: rotateY(-90deg) translateZ(100px);
-}
-
-.top {
-    transform: rotateX(90deg) translateZ(100px);
-}
-
-.bottom {
-    transform: rotateX(-90deg) translateZ(100px);
+.fadeOutLeft {
+    animation: fadeOutLeft 2s 0.15s ease-in-out;
 }
 </style>

@@ -1,41 +1,24 @@
 <template>
-    <div class="logo" :class="active ? 'spin-animation' : ''" @mouseover="animate">
+    <div :class="active ? 'spin-animation' : ''" @mouseenter="active = !active">
         <img :src="image" alt="Логотип">
     </div>
 </template>
 
-<script>
-
-export default {
-    data() {
-        return {
-            active: false
-        }
-    },
-    props: {
-        image: String
-    },
-    methods: {
-        animate() {
-            this.active = !this.active
-        }
+<script setup>
+import { ref } from 'vue'
+defineProps({
+    image: {
+        type: String,
+        required: true
     }
-};
+})
+
+const active = ref(false)
+
+
 </script>
 
 <style>
-.logo {
-    width: 100px;
-    height: 100px;
-    cursor: pointer;
-}
-
-.logo img {
-    width: 100%;
-    height: 100%;
-}
-
-/* CSS анимация */
 @keyframes spin {
     from {
         transform: rotate(0deg);

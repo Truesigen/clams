@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class BurnedTokensController extends Controller
@@ -13,6 +15,7 @@ class BurnedTokensController extends Controller
         $validate = Validator($request->input(), [
             'signature' => 'required|string',
             'account' => 'required|string',
+            'mint' => 'required|string',
             'name' => 'required|string',
             'amount' => 'required|string',
         ]);
@@ -21,7 +24,7 @@ class BurnedTokensController extends Controller
             return response()->json(['message' => $validate->errors()->all()], 422);
         }
 
-        $burnedToken = $request->user()->burnedTokens()->create($request->only(['signature', 'account', 'name', 'amount']));
+        $burnedToken = $request->user()->burnedTokens()->create($request->only(['signature', 'account', 'mint', 'name', 'amount']));
 
         return response()->json(['message' => 'successfull'], 200);
     }

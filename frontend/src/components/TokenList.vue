@@ -1,14 +1,17 @@
 <template>
-    <h1 class="text-3xl font-bold text-center text-gray-800">{{ tokenData.length + ' hostiles' }}</h1>
-    <div class="flex-col px-12 overflow-x-clip py-12">
-
-        <transition-group name="list" tag="div">
-            <Token v-for="(token, index) in tokenData" :key="token.address" :token="token"
-                @destroyToken="emit('destroyToken', token, index)" />
-        </transition-group>
 
 
-    </div>
+
+
+
+
+    <transition-group name="list" tag="div">
+        <Token v-for="(token, index) in tokenData" :key="token.address" :token="token"
+            @destroyToken="emit('destroyToken', token, index)" />
+    </transition-group>
+
+
+
 
 
 </template>
@@ -25,12 +28,6 @@ const props = defineProps({
         required: true
     }
 })
-
-
-const destroyToken = (token, index) => {
-
-    emit('destroyToken', token, index)
-}
 
 
 
