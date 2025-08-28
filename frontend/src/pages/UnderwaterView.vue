@@ -134,22 +134,22 @@ const burnAndCloseAccount = async (token, index) => {
         let tx = await createCloseInstruction(token, publicKey)
 
         let sign = await signTransaction.value(tx)
-        // await sendTransaction(tx, CONNECTION).then(signature => {
+        await sendTransaction(tx, CONNECTION).then(signature => {
 
-        //     http().post('/api/burned/store',
-        //         { signature: signature, account: token.address, mint: token.mint, name: token.metadata.name, amount: token.token.uiAmountString }).then(success => {
-        //             toast.add({ severity: 'success', summary: 'Success', detail: 'Entity burned, account closed and result saved', life: 5000 })
+            http().post('/api/burned/store',
+                { signature: signature, account: token.address, mint: token.mint, name: token.metadata.name, amount: token.token.uiAmountString }).then(success => {
+                    toast.add({ severity: 'success', summary: 'Success', detail: 'Entity burned, account closed and result saved', life: 5000 })
 
-        //             tokensData.value.splice(index, 1)
+                    tokensData.value.splice(index, 1)
 
-        //         }).catch(error => {
-        //             toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 5000 })
-        //         })
+                }).catch(error => {
+                    toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 5000 })
+                })
 
-        // }).catch(error => {
-        //     toast.add({ severity: 'error', summary: 'Error', detail: error, life: 4000 })
+        }).catch(error => {
+            toast.add({ severity: 'error', summary: 'Error', detail: error, life: 4000 })
 
-        // })
+        })
 
     } else {
         toast.add({ severity: 'info', summary: 'You are', detail: 'Weakling!', life: 3000 })

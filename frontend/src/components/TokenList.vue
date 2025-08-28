@@ -1,18 +1,9 @@
 <template>
 
-
-
-
-
-
     <transition-group name="list" tag="div">
         <Token v-for="(token, index) in tokenData" :key="token.address" :token="token"
             @destroyToken="emit('destroyToken', token, index)" />
     </transition-group>
-
-
-
-
 
 </template>
 <script setup>
